@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './react.svg';
 import './Home.css';
+import { Link } from "react-router-dom";
 
-class Reservation extends React.Component {
+class InitialInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +17,7 @@ class Reservation extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleInputChange = async (event) => {
+    handleInputChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -24,10 +25,21 @@ class Reservation extends React.Component {
         this.setState({
             [name]: value
         });
-        return(
-            <div style={{display:'flex', color:'red'}}>
-                <button onClick={() => alert('button clicked!')}>Click me!</button>
-            </div>
+    }
+
+    TicketHandler() {
+        return (
+            <form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                <label>
+                    Titre de Tombola:
+                    <input type="text" name="Insert ticket list" checked={this.state.isGoing}
+                           onChange={this.handleInputChange}/>
+                </label>
+                <button type="submit" value="Submit" checked={this.state.isGoing} onChange={this.handleInputChange}
+                        onClick={() => alert('Launching !')}>
+                    Submit
+                </button>
+            </form>
         )
     }
 
@@ -55,11 +67,13 @@ class Reservation extends React.Component {
                         <input type="text" name="Code Postal" checked={this.state.isGoing}
                                onChange={this.handleInputChange} />
                     </label>
-                    <button type="submit" value="Submit" checked={this.state.isGoing} onClick={async () => {await this.handleInputChange}}>
+                    <Link to="/information">
+                    <button type="submit" value="Submit" checked={this.state.isGoing} onChange={this.handleInputChange} >
                         Submit
                     </button>
+                    </Link>
             </form>
         );
     }
 }
-export default Reservation;
+export default InitialInfo;
